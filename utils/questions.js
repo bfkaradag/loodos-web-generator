@@ -4,7 +4,7 @@ module.exports = async () => {
 	const name = await ask({
 		name: `name`,
 		message: `project name`,
-		hint: `(kebab-case only)`
+		hint: `(kebab-case only )`
 	});
 	const uiLibrary = await ask({
 		name: `uiLibrary`,
