@@ -1,0 +1,38 @@
+{
+	"name": "loodos-web-generator",
+	"description": "generate frontend development boilerplate",
+	"version": "0.0.1",
+	"license": "MIT",
+	"main": "index.js",
+	"type": "module",
+	"bin": {
+		"loodos-web-generator": "index.js",
+		"loodos-web": "index.js"
+	},
+	"author": {
+		"name": "bfkaradag",
+		"email": "furkan.karadag@loodos.com",
+		"url": "loodos.com"
+	},
+	"keywords": [
+		"loodos-web-generator",
+		"bfkaradag"
+	],
+	"files": [
+		"index.js",
+		"utils"
+	],
+	"scripts": {
+		"format": "prettier --write \"./**/*.{js,json}\""
+	},
+	"dependencies": {
+		"autoprefixer": "^10.4.7",
+		"chalk": "^4.1.2",
+		"figlet": "^1.5.2",
+		"inquirer": "^8.2.4",
+		"nanospinner": "^1.1.0"
+	},
+	"devDependencies": {
+		"prettier": "^2.6.2"
+	}
+}
