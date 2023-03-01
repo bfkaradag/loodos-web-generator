@@ -14,27 +14,19 @@ import { createSpinner } from 'nanospinner';
 
 const queries = {
 	'temp-next': {
-		npm: 'npx create-next-app@latest --ts',
-		yarn: 'yarn create next-app	--typescript'
+		npm: projectName =>
+			'npx create-next-app@latest ' + projectName + ' --typescript',
+		yarn: projectName =>
+			'yarn create next-app ' + projectName + ' --typescript'
 	},
 	temp: {
-		npm: 'npx create-react-app my-app --template typescript',
-		yarn: 'yarn create react-app my-app --template typescript'
+		npm: projectName =>
+			'npx create-react-app ' + projectName + ' --template typescript',
+
+		yarn: projectName =>
+			'yarn create react-app ' + projectName + ' --template typescript'
 	}
 };
-const create = answers => {
-	const runShScripts = [];
-
-	runShScripts.push(queries[answers.next ? 'temp-next' : 'temp'][answers.pm]);
-	let installPackagesCode = answers.pm === 'npm' ? 'npm install' : 'yarn add';
-
-	if (answers.ui !== 'none') installPackagesCode += ' ' + answers.ui;
-	if (answers.css !== 'none') installPackagesCode += ' ' + answers.css;
-	runShScripts.push(installPackagesCode);
-	console.log(runShScripts);
-};
-
-console.log(chalk.blueBright(figlet.textSync('loodos web')));
 const questions = [
 	{
 		type: 'input',
@@ -52,7 +44,7 @@ const questions = [
 	},
 	{
 		type: 'list',
-		name: 'css',
+		name: 'next',
 		message: 'Will you use Next.js',
 		choices: [
 			{ value: false, name: 'No' },
@@ -82,6 +74,30 @@ const questions = [
 		]
 	}
 ];
+const create = answers => {
+	const runShScripts = [];
+	runShScripts.push(
+		queries[answers.next ? 'temp-next' : 'temp'][answers.pm](answers.name)
+	);
+	let installPackagesCode = answers.pm === 'npm' ? 'npm install' : 'yarn add';
+	installPackagesCode += ' jotai';
+	if (answers.ui !== 'none')
+		installPackagesCode += ' ' + answers.ui ? ' ' + answers.ui : '';
+	if (answers.css !== 'none') {
+		installPackagesCode +=
+			' ' + answers.css ? ' -D tailwindcss postcss autoprefixer' : '';
+	}
+
+	runShScripts.push(installPackagesCode);
+
+	if (answers.css !== 'none') {
+		runShScripts.push('npx tailwindcss init -p');
+	}
+	console.log(runShScripts);
+};
+
+console.log(chalk.blueBright(figlet.textSync('loodos web')));
+
 const run = () => {
 	inquirer.prompt(questions).then(answers => {
 		create(answers);
@@ -99,3 +115,6 @@ run();
 // inquirer.prompt(["Project name:"]).then((answers) => {
 //     console.log(answers)
 // })
+
+//jotai, useLoading, useModal,
+//
